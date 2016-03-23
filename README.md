@@ -9,4 +9,31 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/569d91a5-bd6e-4ee7-b47e-ed619406c35c/small.png)](https://insight.sensiolabs.com/projects/569d91a5-bd6e-4ee7-b47e-ed619406c35c)
 
 
-Providing easy-to-use tools for doctrine
+Providing easy-to-use tools for doctrine.
+
+Content
+-------
+
+This lib provides the following util classes:
+ - `EntityManagerBuilder` an entity manager builder providing an easy way to add **Doctrine** types
+   to the `EntityManager`, you can also call methods on the type using a callable formatted array.
+   It has been designed to be compatible with **Symfony DI** config files.
+ - `Psr3SqlLogger` is a **Doctrine** logger encapsulating a **PSR3** logger.
+
+
+Usage example
+------------
+
+**EntityManagerBuilder**
+
+```php
+$builder = new EntityManagerBuilder($connection, $config);
+$builder->addType('customName', CustomType::class, [ [ 'callTypeMethod', []] ]);
+$entityManager = $builder->buildEntityManager();
+```
+
+**Psr3SqlLogger**
+
+```php
+$logger = new Psr3SqlLogger($psr3Logger, LogLevel::INFO);
+```
