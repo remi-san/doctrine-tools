@@ -4,22 +4,26 @@ namespace Doctrine\Tools;
 
 use Doctrine\DBAL\Logging\SQLLogger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class Psr3SqlLogger implements SQLLogger
 {
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
+
+    /** @var string */
+    private $level;
 
     /**
      * Constructor.
      *
      * @param LoggerInterface $logger
+     * @param string          $level
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct(LoggerInterface $logger = null, $level = LogLevel::DEBUG)
     {
         $this->logger = $logger;
+        $this->level = $level;
     }
 
     /**
@@ -31,13 +35,14 @@ class Psr3SqlLogger implements SQLLogger
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
-        $this->logger && $this->logger->debug(
+        $this->logger && $this->logger->log(
+            $this->level,
             'Execute SQL',
-            array(
+            [
                 'query' => $sql,
                 'params' => $params,
-                'types' => $types,
-            )
+                'types' => $types
+            ]
         );
     }
 

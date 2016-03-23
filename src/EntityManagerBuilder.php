@@ -7,9 +7,6 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 
-/**
- * @codeCoverageIgnore
- */
 class EntityManagerBuilder
 {
     /**
@@ -40,14 +37,18 @@ class EntityManagerBuilder
     public function addType(
         $name,
         $className,
-        array $calls = array()
+        array $calls = []
     ) {
-        Type::addType($name, $className);
+        if (!Type::hasType($name)) {
+            Type::addType($name, $className);
+        } else {
+            Type::overrideType($name, $className);
+        }
 
         if ($calls) {
             $type = self::getType($name);
             foreach ($calls as $call) {
-                call_user_func_array(array($type, $call[0]), $call[1]);
+                call_user_func_array([$type, $call[0]], $call[1]);
             }
         }
 
