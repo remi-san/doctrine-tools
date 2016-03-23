@@ -45,7 +45,7 @@ class EntityManagerBuilder
             Type::overrideType($name, $className);
         }
 
-        if ($calls) {
+        if (!empty($calls)) {
             $type = self::getType($name);
             foreach ($calls as $call) {
                 call_user_func_array([$type, $call[0]], $call[1]);

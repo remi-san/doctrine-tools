@@ -1,6 +1,7 @@
 {
     "name": "remi-san/doctrine-tools",
     "description" : "A set of tools for Doctrine",
+    "license" : "MIT",
     "keywords": [
         "Doctrine",
         "Tools"
