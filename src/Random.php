@@ -29,10 +29,8 @@ class Random extends FunctionNode
         switch ($sqlWalker->getConnection()->getDatabasePlatform()->getName()) {
             case 'postgresql':
                 return 'RANDOM()';
-                break;
             case 'mysql':
                 return 'RAND()';
-                break;
             default:
                 throw new QueryException("You can't use RANDOM()!");
         }
